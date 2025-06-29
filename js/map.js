@@ -245,7 +245,6 @@ function showHeaderFooter() {
 function resetInactivityTimer() {
     // Clear existing timers
     clearTimeout(inactivityTimer);
-    clearTimeout(showTimer);
     
     // Show header and footer with delay
     showTimer = setTimeout(showHeaderFooter, SHOW_DELAY);
