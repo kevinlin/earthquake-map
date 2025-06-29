@@ -416,6 +416,28 @@ function processEarthquakeData(earthquakeFeatures) {
     }).filter(quake => quake !== null);
 }
 
+// Function to dismiss data source panel
+function dismissDataSourcePanel() {
+    const dataSourceInfo = document.getElementById('data-source-info');
+    if (dataSourceInfo) {
+        // Clear any existing timer
+        if (dataSourceInfo.dismissTimer) {
+            clearTimeout(dataSourceInfo.dismissTimer);
+        }
+        
+        dataSourceInfo.style.opacity = '0';
+        dataSourceInfo.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (dataSourceInfo.parentElement) {
+                dataSourceInfo.remove();
+            }
+        }, 300); // Wait for animation to complete
+    }
+}
+
+// Make function globally accessible for onclick handlers
+window.dismissDataSourcePanel = dismissDataSourcePanel;
+
 // Function to update data source information
 function updateDataSourceInfo(count, isCSVFallback = false) {
     // Update the legend or add a data source indicator
@@ -429,12 +451,18 @@ function updateDataSourceInfo(count, isCSVFallback = false) {
         const dataInfo = dataSourceInfo.querySelector('.data-info');
         if (dataInfo) {
             dataInfo.innerHTML = `
+                <button class="close-btn" onclick="dismissDataSourcePanel()" title="Close">&times;</button>
                 <strong>Data Source:</strong> ${sourceDetail}<br>
                 <strong>Total Events:</strong> ${count.toLocaleString()} earthquakes (M≥6.0, last 200 years)<br>
                 <strong>Region:</strong> Asia Pacific<br>
                 <strong>Last Updated:</strong> ${new Date().toLocaleString()}<br>
                 ${isCSVFallback ? '<strong style="color: #e67e22;">⚠️ Using fallback data (API unavailable)</strong>' : ''}
             `;
+        }
+        
+        // Reset any existing auto-dismiss timer
+        if (dataSourceInfo.dismissTimer) {
+            clearTimeout(dataSourceInfo.dismissTimer);
         }
     } else {
         // Create data source info element
@@ -443,6 +471,7 @@ function updateDataSourceInfo(count, isCSVFallback = false) {
         infoDiv.className = `data-source-info ${isCSVFallback ? 'fallback-mode' : ''}`;
         infoDiv.innerHTML = `
             <div class="data-info">
+                <button class="close-btn" onclick="dismissDataSourcePanel()" title="Close">&times;</button>
                 <strong>Data Source:</strong> ${sourceDetail}<br>
                 <strong>Total Events:</strong> ${count.toLocaleString()} earthquakes (M≥6.0, last 200 years)<br>
                 <strong>Region:</strong> Asia Pacific<br>
@@ -451,6 +480,29 @@ function updateDataSourceInfo(count, isCSVFallback = false) {
             </div>
         `;
         document.body.appendChild(infoDiv);
+        
+        // Add hover event listeners to pause auto-dismiss
+        infoDiv.addEventListener('mouseenter', function() {
+            if (this.dismissTimer) {
+                clearTimeout(this.dismissTimer);
+                this.dismissTimer = null;
+            }
+        });
+        
+        infoDiv.addEventListener('mouseleave', function() {
+            // Restart auto-dismiss timer when mouse leaves
+            this.dismissTimer = setTimeout(() => {
+                dismissDataSourcePanel();
+            }, 5000); // 5 seconds after mouse leaves
+        });
+    }
+    
+    // Set auto-dismiss timer (10 seconds)
+    const panel = document.getElementById('data-source-info');
+    if (panel) {
+        panel.dismissTimer = setTimeout(() => {
+            dismissDataSourcePanel();
+        }, 10000); // 10 seconds
     }
 }
 
