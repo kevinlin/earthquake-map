@@ -6,7 +6,7 @@ body {
 }
 
 .header {
-    background-color: #333;
+    background-color: rgba(51, 51, 51, 0.5);
     color: white;
     padding: 1rem;
     text-align: center;
@@ -19,8 +19,11 @@ body {
 
 #map-container {
     width: 100%;
-    height: calc(100vh - 200px);
-    position: relative;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
 #map {
@@ -28,11 +31,16 @@ body {
     height: 100%;
 }
 
-#year-filter-container {
-    background-color: #333;
+.footer {
+    background-color: rgba(51, 51, 51, 0.5);
     color: white;
-    padding: 0.5rem 1rem;
+    padding: 1rem;
     text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 
 .filter-controls {
@@ -41,6 +49,12 @@ body {
     justify-content: center;
     gap: 15px;
     flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.8rem;
 }
 
 .slider {
@@ -60,14 +74,6 @@ body {
 
 #apply-filter:hover {
     background-color: #45a049;
-}
-
-.footer {
-    background-color: #333;
-    color: white;
-    padding: 0.5rem;
-    text-align: center;
-    font-size: 0.8rem;
 }
 
 .legend {
