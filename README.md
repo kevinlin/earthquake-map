@@ -13,24 +13,33 @@ This project creates an interactive map of the Asia Pacific region showing:
 - **Earthquake Belt Overlays**: 
   - Ring of Fire (red line)
   - Alpide Belt (orange line)
-- **Earthquake Visualization**:
-  - 14,266 major earthquakes (magnitude ≥ 6.0) from 1825 to present
+- **Dynamic Earthquake Visualization**:
+  - Real-time data from USGS Earthquake Catalog API
+  - Automatic fallback to static CSV data if API is unavailable
+  - Major earthquakes (magnitude ≥ 6.0) from the last 200 years
   - Marker size proportional to earthquake magnitude
   - Color-coding based on earthquake depth
+  - Automatic data updates from live API
 - **Interactive Elements**:
   - Tooltips showing detailed earthquake information on mouseover
   - Pan and zoom functionality
   - Legends for magnitude and depth
+  - Loading indicators and error handling
 
 ## Technical Implementation
 - **Frontend**: HTML, CSS, JavaScript
 - **Libraries**:
   - Leaflet.js for interactive mapping
   - D3.js for data visualization
-  - PapaParse for CSV data processing
 - **Data Sources**:
-  - USGS Earthquake Catalog (14,266 earthquakes)
+  - USGS Earthquake Catalog API (real-time data)
   - Geographic coordinates for earthquake belts
+- **API Integration**:
+  - Fetch API for HTTP requests
+  - GeoJSON format for earthquake data
+  - Automatic pagination for large datasets
+  - Error handling and retry mechanisms
+  - Automatic fallback to static CSV if API fails
 
 ## Project Structure
 ```
@@ -39,10 +48,10 @@ earthquake_map_project/
 ├── css/
 │   └── styles.css       # Styling for the map and UI elements
 ├── js/
-│   └── map.js           # JavaScript for map functionality
+│   └── map.js           # JavaScript for map functionality and API integration
 └── data/
     └── usgs/
-        └── major_earthquakes.csv  # Earthquake data
+        └── major_earthquakes.csv  # Fallback earthquake data (used if API fails)
 ```
 
 ## Usage Instructions
@@ -58,3 +67,7 @@ Potential improvements that could be added:
 - Filtering options by magnitude, depth, or date range
 - Additional data layers (population density, tectonic plates)
 - Mobile-optimized interface
+- Caching mechanism for improved performance
+- Real-time earthquake notifications
+- Historical earthquake animation
+- Export functionality for filtered data

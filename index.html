@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asia Pacific Earthquake Map</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -20,8 +21,9 @@
             <label for="year-slider">Filter earthquakes by years from present: <span id="year-value">200</span> years</label>
             <input type="range" id="year-slider" min="1" max="200" value="200" class="slider">
             <button id="apply-filter">Apply Filter</button>
+            <button id="refresh-data">Refresh Data</button>
         </div>
-        <p>Data sources: USGS Earthquake Catalog, ISC-GEM Global Instrumental Earthquake Catalogue</p>
+        <p>Data source: Real-time USGS Earthquake Catalog API (with CSV fallback)</p>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
