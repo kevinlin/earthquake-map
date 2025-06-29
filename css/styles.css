@@ -10,6 +10,18 @@ body {
     color: white;
     padding: 1rem;
     text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 500;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.header.hidden {
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
 }
 
 .header h1 {
@@ -41,6 +53,18 @@ body {
     left: 0;
     right: 0;
     z-index: 1000;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.footer.hidden {
+    opacity: 0;
+    transform: translateY(100%);
+    pointer-events: none;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.8rem;
 }
 
 .filter-controls {
@@ -50,11 +74,6 @@ body {
     gap: 15px;
     flex-wrap: wrap;
     margin-bottom: 0.5rem;
-}
-
-.footer p {
-    margin: 0;
-    font-size: 0.8rem;
 }
 
 .slider {

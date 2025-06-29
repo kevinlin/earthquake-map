@@ -220,6 +220,47 @@ function setupYearFilter() {
     });
 }
 
+// Mouse inactivity functionality
+let inactivityTimer;
+let showTimer;
+const INACTIVITY_DELAY = 3000; // 3 seconds
+const SHOW_DELAY = 1000; // 1 second delay before showing
+
+function hideHeaderFooter() {
+    const header = document.querySelector('.header');
+    const footer = document.querySelector('.footer');
+    
+    header.classList.add('hidden');
+    footer.classList.add('hidden');
+}
+
+function showHeaderFooter() {
+    const header = document.querySelector('.header');
+    const footer = document.querySelector('.footer');
+    
+    header.classList.remove('hidden');
+    footer.classList.remove('hidden');
+}
+
+function resetInactivityTimer() {
+    // Clear existing timers
+    clearTimeout(inactivityTimer);
+    clearTimeout(showTimer);
+    
+    // Show header and footer with delay
+    showTimer = setTimeout(showHeaderFooter, SHOW_DELAY);
+    
+    // Set new inactivity timer
+    inactivityTimer = setTimeout(hideHeaderFooter, INACTIVITY_DELAY);
+}
+
+// Add mouse move event listener to the entire document
+document.addEventListener('mousemove', resetInactivityTimer);
+document.addEventListener('mousedown', resetInactivityTimer);
+document.addEventListener('keypress', resetInactivityTimer);
+document.addEventListener('scroll', resetInactivityTimer);
+document.addEventListener('touchstart', resetInactivityTimer);
+
 // Initialize the map when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     // Draw earthquake belts
@@ -227,4 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load and display earthquake data
     loadEarthquakeData();
+    
+    // Start inactivity timer
+    resetInactivityTimer();
 });
